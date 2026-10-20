@@ -1,6 +1,4 @@
-# Karma Foundation — Website Clone (F1 Edition)
-
-An exact 1:1 replica of the Karma Foundation website ([https://floralwhite-frog-723847.hostingersite.com/](https://floralwhite-frog-723847.hostingersite.com/)).
+# Karma Foundation — Website 
 
 ## 🚀 Quick Start / How to Run
 
