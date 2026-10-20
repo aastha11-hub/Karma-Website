@@ -1,0 +1,871 @@
+/* ═══════════════════════════════════════════════════════
+   KARMA FOUNDATION — F1 EDITION 🏎️
+   Speed. Drama. Precision. Infinite Positivity.
+═══════════════════════════════════════════════════════ */
+
+:root {
+  --karma-pointer-x: 50vw;
+  --karma-pointer-y: 50vh;
+  --pit-glow: rgba(224, 120, 32, 0.15);
+  --speed-line-color: rgba(255, 255, 255, 0.06);
+}
+
+/* ── SPEED LINES BACKGROUND ── */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    repeating-linear-gradient(
+      105deg,
+      transparent 0,
+      transparent 120px,
+      var(--speed-line-color) 120px,
+      var(--speed-line-color) 121px
+    );
+  opacity: 0;
+  animation: f1-lines-in 1.2s 1.8s ease forwards;
+}
+
+@keyframes f1-lines-in {
+  to { opacity: 1; }
+}
+
+/* ── TRACK LINE (VERTICAL ACCENT) ── */
+body::after {
+  content: "";
+  position: fixed;
+  top: 0;
+  right: 22px;
+  width: 2px;
+  height: 0;
+  z-index: 9999;
+  background: linear-gradient(to bottom, var(--orange), transparent);
+  animation: track-drop 1.4s 0.8s cubic-bezier(.25, 0, 0, 1) forwards;
+  pointer-events: none;
+}
+
+@keyframes track-drop {
+  to { height: 100vh; }
+}
+
+/* ── PROGRESS BAR (DRS STYLE) ── */
+.karma-progress {
+  position: fixed;
+  inset: 0 auto auto 0;
+  z-index: 10002;
+  width: 0;
+  height: 4px;
+  pointer-events: none;
+  background: linear-gradient(90deg, #E07820, #FF4500, #ffb347, #E07820);
+  background-size: 300% 100%;
+  box-shadow: 0 0 18px rgba(224, 120, 32, 0.8), 0 0 6px #fff;
+  animation: drs-pulse 1.4s linear infinite;
+  transition: width 0.08s linear;
+}
+
+@keyframes drs-pulse {
+  0%   { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
+}
+
+/* ── NAV TRANSITIONS ── */
+nav {
+  transition: box-shadow .3s ease, background .3s ease, transform .3s ease;
+}
+
+nav.karma-scrolled {
+  background: rgba(8, 15, 46, 0.96);
+  box-shadow: 0 4px 40px rgba(8, 15, 46, 0.5), 0 0 0 1px rgba(224, 120, 32, 0.2);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+nav.karma-scrolled .nav-links a:not(.nav-donate) {
+  color: rgba(255, 255, 255, 0.85) !important;
+}
+
+nav.karma-scrolled .nav-links a:not(.nav-donate):hover {
+  color: var(--orange) !important;
+}
+
+.nav-logo {
+  transition: transform .35s cubic-bezier(.2, .8, .2, 1), filter .35s ease;
+}
+
+.nav-logo:hover {
+  transform: scale(1.07) rotate(-1deg);
+  filter: drop-shadow(0 6px 18px rgba(224, 120, 32, 0.4));
+}
+
+/* ── NAV LINK UNDERLINE ── */
+.nav-links a:not(.nav-donate) {
+  position: relative;
+}
+
+.nav-links a:not(.nav-donate)::after {
+  content: "";
+  position: absolute;
+  left: 13px;
+  right: 13px;
+  bottom: 2px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--orange), #ffb347);
+  box-shadow: 0 0 8px rgba(224, 120, 32, 0.6);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform .28s ease;
+}
+
+.nav-links a:not(.nav-donate):hover::after,
+.nav-links a:not(.nav-donate).active::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* ── SCROLL REVEAL ── */
+.reveal-ready .karma-reveal {
+  opacity: 0;
+  transform: translateY(28px) skewX(-0.5deg);
+  transition:
+    opacity .6s cubic-bezier(.2, .7, .2, 1),
+    transform .6s cubic-bezier(.2, .7, .2, 1);
+  transition-delay: var(--karma-delay, 0ms);
+}
+
+.reveal-ready .karma-reveal.karma-visible {
+  opacity: 1;
+  transform: translateY(0) skewX(0);
+}
+
+/* ── 3D TILT CARDS ── */
+.karma-tilt {
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.karma-tilt img,
+.karma-tilt .if-body,
+.karma-tilt .n-body,
+.karma-tilt .t-body,
+.karma-tilt .c-body,
+.karma-tilt .ev-body {
+  transform: translateZ(2px);
+}
+
+/* ── BUTTON INTERACTIONS ── */
+.btn-o,
+.btn-b,
+.btn-outline,
+.btn-wh,
+.btn-wh-s,
+.nav-donate,
+.mob-donate,
+.f-submit {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* ── RIPPLE ── */
+.karma-ripple {
+  position: absolute;
+  z-index: -1;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  pointer-events: none;
+  background: rgba(255, 255, 255, 0.5);
+  transform: translate(-50%, -50%) scale(0);
+  animation: karma-ripple .7s ease-out forwards;
+}
+
+@keyframes karma-ripple {
+  to {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(28);
+  }
+}
+
+/* ── PAGE BANNER ── */
+.page-banner::before {
+  transform: scale(1.08);
+  animation: karma-banner-drift 16s ease-in-out infinite alternate;
+}
+
+@keyframes karma-banner-drift {
+  to { transform: scale(1.18) translate3d(1.5%, -1%, 0); }
+}
+
+.page-banner-content > * {
+  animation: karma-banner-in .75s both cubic-bezier(.2, .8, .2, 1);
+}
+
+.page-banner-content > *:nth-child(2) { animation-delay: .1s; }
+.page-banner-content > *:nth-child(3) { animation-delay: .2s; }
+
+@keyframes karma-banner-in {
+  from { opacity: 0; transform: translateY(22px); }
+}
+
+/* ── HERO ZOOM ── */
+.hero .slide.active img {
+  animation: karma-hero-zoom 8s ease-out both;
+}
+
+@keyframes karma-hero-zoom {
+  from { transform: scale(1.1); }
+  to { transform: scale(1); }
+}
+
+.hero .slide-body {
+  transform: translate3d(var(--hero-x, 0), var(--hero-y, 0), 0);
+  transition: transform .25s ease-out;
+}
+
+/* ── STAT SHIMMER ── */
+.stat {
+  position: relative;
+  overflow: hidden;
+}
+
+.stat::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(110deg, transparent 25%, rgba(255, 255, 255, 0.2), transparent 75%);
+  transform: translateX(-120%);
+}
+
+.stat:hover::after {
+  transform: translateX(120%);
+  transition: transform .7s ease;
+}
+
+/* ── CARD SHIMMER ── */
+.gal-item::after,
+.ic-img::after,
+.if-img::after,
+.n-img::after,
+.nc-img::after,
+.t-photo::after,
+.c-photo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(120deg, transparent 25%, rgba(255, 255, 255, 0.25), transparent 75%);
+  transform: translateX(-130%);
+  transition: transform .6s ease;
+}
+
+.gal-item:hover::after,
+.ic:hover .ic-img::after,
+.if-card:hover .if-img::after,
+.n-card:hover .n-img::after,
+.nc:hover .nc-img::after,
+.t-card:hover .t-photo::after,
+.c-card:hover .c-photo::after {
+  transform: translateX(130%);
+}
+
+/* ── BACK TO TOP (CHECKERED FLAG STYLE) ── */
+.karma-top {
+  position: fixed;
+  right: 22px;
+  bottom: 22px;
+  z-index: 998;
+  width: 50px;
+  height: 50px;
+  border: 0;
+  border-radius: 50%;
+  color: #fff;
+  background: linear-gradient(135deg, var(--orange), var(--red));
+  box-shadow: 0 10px 30px rgba(204, 34, 0, 0.35);
+  cursor: pointer;
+  font: 700 22px/1 sans-serif;
+  opacity: 0;
+  transform: translateY(18px) scale(.8);
+  transition: opacity .25s ease, transform .3s cubic-bezier(.2, .8, .2, 1), box-shadow .25s ease;
+  overflow: hidden;
+}
+
+.karma-top::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-conic-gradient(rgba(255,255,255,0.15) 0% 25%, transparent 0% 50%) 0 0 / 10px 10px;
+  border-radius: 50%;
+  opacity: 0.5;
+}
+
+.karma-top.show {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.karma-top:hover {
+  transform: translateY(-5px) scale(1.08);
+  box-shadow: 0 18px 40px rgba(204, 34, 0, 0.45), 0 0 20px rgba(224, 120, 32, 0.3);
+}
+
+/* ── PAGE TRANSITION ── */
+.karma-transition {
+  position: fixed;
+  inset: 0;
+  z-index: 10001;
+  pointer-events: none;
+  background: linear-gradient(135deg, var(--dark) 30%, var(--blue) 70%, var(--orange));
+  transform: translateY(100%);
+}
+
+.karma-transition.go {
+  animation: karma-page-out .45s cubic-bezier(.7, 0, .25, 1) forwards;
+}
+
+@keyframes karma-page-out {
+  to { transform: translateY(0); }
+}
+
+/* ── LIGHTBOX ── */
+.karma-lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 10003;
+  display: grid;
+  place-items: center;
+  padding: 28px;
+  background: rgba(5, 10, 30, 0.96);
+  backdrop-filter: blur(20px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .28s ease;
+}
+
+.karma-lightbox.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.karma-lightbox img {
+  display: block;
+  max-width: min(1100px, 92vw);
+  max-height: 86vh;
+  border-radius: 6px;
+  box-shadow: 0 40px 100px rgba(0, 0, 0, 0.7), 0 0 40px rgba(224, 120, 32, 0.15);
+  transform: scale(.88) translateY(20px);
+  transition: transform .4s cubic-bezier(.2, .8, .2, 1);
+  border: 1px solid rgba(224, 120, 32, 0.2);
+}
+
+.karma-lightbox.open img {
+  transform: scale(1) translateY(0);
+}
+
+.karma-lightbox button {
+  position: absolute;
+  top: 20px;
+  right: 22px;
+  width: 44px;
+  height: 44px;
+  border: 1px solid rgba(224, 120, 32, 0.35);
+  border-radius: 50%;
+  color: #fff;
+  background: rgba(224, 120, 32, 0.15);
+  cursor: pointer;
+  font-size: 22px;
+  transition: background .2s ease, border-color .2s ease;
+}
+
+.karma-lightbox button:hover {
+  background: rgba(224, 120, 32, 0.4);
+  border-color: var(--orange);
+}
+
+/* ── FORM FOCUS ── */
+.fg input:focus,
+.fg select:focus,
+.fg textarea:focus {
+  box-shadow: 0 0 0 3px rgba(224, 120, 32, 0.25), 0 0 0 1px rgba(224, 120, 32, 0.5);
+  transform: translateY(-1px);
+}
+
+/* ── CUSTOM CURSOR ── */
+@media (pointer: fine) {
+  a, button, .gal-item { cursor: pointer; }
+}
+
+/* ── INTRO SEQUENCE (RACE START) ── */
+.karma-intro {
+  position: fixed;
+  inset: 0;
+  z-index: 12000;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  color: #fff;
+  background: var(--dark);
+  transition: opacity .55s ease, visibility .55s ease;
+}
+
+/* Racing stripe panels */
+.karma-intro::before,
+.karma-intro::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--blue);
+  transform: translateX(-100%);
+  animation: karma-intro-panel 1.2s cubic-bezier(.75, 0, .2, 1) forwards;
+}
+
+.karma-intro::after {
+  background: var(--orange);
+  animation-delay: .14s;
+}
+
+.karma-intro-inner {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: min(440px, 78vw);
+  text-align: center;
+}
+
+.karma-intro img {
+  width: min(380px, 70vw);
+  height: auto;
+  filter: brightness(0) invert(1);
+  opacity: 0;
+  transform: translateY(28px) scale(.92);
+  animation: karma-intro-logo .8s .45s cubic-bezier(.2, .8, .2, 1) forwards;
+}
+
+.karma-intro-line {
+  width: 0;
+  height: 2px;
+  margin-top: 18px;
+  background: linear-gradient(90deg, var(--orange), #fff);
+  box-shadow: 0 0 12px var(--orange);
+  animation: karma-intro-line .7s .65s ease forwards;
+}
+
+.karma-intro-text {
+  margin-top: 14px;
+  font-size: .66rem;
+  font-weight: 700;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  opacity: 0;
+  animation: karma-intro-text .6s .82s ease forwards;
+}
+
+/* Countdown lights under logo */
+.karma-intro-lights {
+  display: flex;
+  gap: 10px;
+  margin-top: 22px;
+  opacity: 0;
+  animation: karma-intro-text .4s .95s ease forwards;
+}
+
+.karma-intro-light {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #222;
+  border: 2px solid rgba(255,255,255,0.15);
+  animation: light-on .3s ease forwards;
+}
+
+.karma-intro-light:nth-child(1) { animation-delay: 1.0s; }
+.karma-intro-light:nth-child(2) { animation-delay: 1.2s; }
+.karma-intro-light:nth-child(3) { animation-delay: 1.4s; }
+.karma-intro-light:nth-child(4) { animation-delay: 1.6s; }
+.karma-intro-light:nth-child(5) { animation-delay: 1.8s; }
+
+@keyframes light-on {
+  to { background: #cc0000; box-shadow: 0 0 14px #cc0000; border-color: #ff2222; }
+}
+
+.karma-intro.leave {
+  opacity: 0;
+  visibility: hidden;
+}
+
+@keyframes karma-intro-panel {
+  0%   { transform: translateX(-100%); }
+  45%, 60% { transform: translateX(0); }
+  100% { transform: translateX(100%); }
+}
+
+@keyframes karma-intro-logo {
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes karma-intro-line {
+  to { width: 100%; }
+}
+
+@keyframes karma-intro-text {
+  to { opacity: .82; }
+}
+
+/* ── SPARK CANVAS ── */
+.karma-spark-canvas {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+
+.hero .slide-body,
+.hero .hero-tag,
+.hero .dots {
+  z-index: 3;
+}
+
+/* ── HERO SCROLL HINT ── */
+.hero::after {
+  content: "SCROLL";
+  position: absolute;
+  right: 24px;
+  bottom: 88px;
+  z-index: 4;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: .6rem;
+  font-weight: 700;
+  letter-spacing: 4px;
+  writing-mode: vertical-rl;
+  animation: karma-scroll-hint 1.6s ease-in-out infinite;
+}
+
+@keyframes karma-scroll-hint {
+  50% { transform: translateY(10px); opacity: .3; }
+}
+
+/* ── WORD-BY-WORD ANIMATION ── */
+.karma-word {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(1em) rotate(1.5deg);
+  animation: karma-word-in .65s cubic-bezier(.18, .8, .22, 1) forwards;
+  animation-delay: var(--word-delay, 0ms);
+}
+
+.slide .karma-word {
+  animation-play-state: paused;
+}
+
+.slide.active .karma-word {
+  animation-play-state: running;
+}
+
+@keyframes karma-word-in {
+  to { opacity: 1; transform: translateY(0) rotate(0); }
+}
+
+/* ── SECTION TITLE UNDERLINE ── */
+h2.st::after {
+  content: "";
+  display: block;
+  width: 50px;
+  height: 3px;
+  margin-top: 14px;
+  background: linear-gradient(90deg, var(--orange), #ffb347, var(--blue));
+  box-shadow: 0 0 10px rgba(224, 120, 32, 0.4);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .7s .2s ease;
+}
+
+.sec-header h2.st::after {
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.karma-visible h2.st::after,
+h2.st.karma-title-live::after {
+  transform: scaleX(1);
+}
+
+/* ── CARD TILT GLOW ── */
+.karma-tilt {
+  --card-x: 50%;
+  --card-y: 50%;
+  position: relative;
+}
+
+.karma-tilt::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  pointer-events: none;
+  border-radius: inherit;
+  background: radial-gradient(circle at var(--card-x) var(--card-y), rgba(224, 120, 32, 0.22), transparent 38%);
+  opacity: 0;
+  transition: opacity .25s ease;
+}
+
+.karma-tilt:hover::before {
+  opacity: 1;
+}
+
+/* ── CUSTOM CURSOR ── */
+.karma-cursor-dot,
+.karma-cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 12001;
+  pointer-events: none;
+  border-radius: 50%;
+  opacity: 0;
+  transform: translate(-50%, -50%);
+}
+
+.karma-cursor-dot {
+  width: 5px;
+  height: 5px;
+  background: var(--orange);
+  box-shadow: 0 0 8px var(--orange);
+}
+
+.karma-cursor-ring {
+  width: 32px;
+  height: 32px;
+  border: 1.5px solid rgba(224, 120, 32, 0.75);
+  transition: width .18s ease, height .18s ease, border-color .18s ease, background .18s ease;
+}
+
+.karma-cursor-ring.active {
+  width: 54px;
+  height: 54px;
+  border-color: var(--blue);
+  background: rgba(26, 58, 140, 0.1);
+  box-shadow: 0 0 20px rgba(26, 58, 140, 0.25);
+}
+
+body.karma-cursor-on,
+body.karma-cursor-on a,
+body.karma-cursor-on button,
+body.karma-cursor-on .gal-item {
+  cursor: none !important;
+}
+
+/* ── IMPACT FAB (PIT STOP STYLE) ── */
+.karma-impact {
+  position: fixed;
+  left: 22px;
+  bottom: 22px;
+  z-index: 997;
+  display: flex;
+  flex-direction: column-reverse;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.karma-impact-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 50px;
+  padding: 0 20px;
+  border: 0;
+  border-radius: 25px;
+  color: #fff;
+  background: linear-gradient(135deg, var(--dark), var(--blue));
+  box-shadow: 0 14px 40px rgba(8, 15, 46, 0.4), 0 0 0 1px rgba(224, 120, 32, 0.2);
+  font-family: 'Poppins', sans-serif;
+  font-size: .78rem;
+  font-weight: 700;
+  cursor: pointer;
+  letter-spacing: 0.5px;
+  transition: box-shadow .25s ease, transform .25s ease;
+}
+
+.karma-impact-toggle:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 20px 50px rgba(8, 15, 46, 0.5), 0 0 0 1px rgba(224, 120, 32, 0.4);
+}
+
+.karma-impact-toggle span {
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  color: var(--dark);
+  background: linear-gradient(135deg, var(--orange), #ffb347);
+  font-size: 1.1rem;
+  box-shadow: 0 4px 12px rgba(224, 120, 32, 0.4);
+  transition: transform .3s cubic-bezier(.2, .8, .2, 1);
+}
+
+.karma-impact.open .karma-impact-toggle span {
+  transform: rotate(45deg);
+}
+
+.karma-impact-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(16px);
+  transition: opacity .25s ease, transform .3s cubic-bezier(.2, .8, .2, 1);
+}
+
+.karma-impact.open .karma-impact-menu {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.karma-impact-menu a {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 18px;
+  border: 1px solid rgba(224, 120, 32, 0.25);
+  border-radius: 22px;
+  color: #fff;
+  background: rgba(8, 15, 46, 0.95);
+  box-shadow: 0 8px 28px rgba(8, 15, 46, 0.25);
+  backdrop-filter: blur(16px);
+  font-size: .75rem;
+  font-weight: 600;
+  text-decoration: none;
+  transform: translateX(-10px);
+  transition: transform .25s ease, background .25s ease, border-color .25s ease, box-shadow .25s ease;
+  white-space: nowrap;
+}
+
+.karma-impact.open .karma-impact-menu a {
+  transform: translateX(0);
+}
+
+.karma-impact-menu a:hover {
+  background: linear-gradient(135deg, var(--orange), #CC2200);
+  border-color: transparent;
+  box-shadow: 0 12px 36px rgba(224, 120, 32, 0.35);
+}
+
+.karma-impact-menu a:nth-child(2) { transition-delay: 45ms; }
+.karma-impact-menu a:nth-child(3) { transition-delay: 90ms; }
+
+/* ── LIGHTBOX NAV ── */
+.karma-lightbox-nav {
+  position: absolute;
+  top: 50%;
+  width: 48px !important;
+  height: 48px !important;
+  transform: translateY(-50%);
+  font-size: 28px !important;
+}
+
+.karma-lightbox-prev { left: 22px; right: auto !important; }
+.karma-lightbox-next { right: 22px; }
+
+.karma-lightbox-count {
+  position: absolute;
+  left: 50%;
+  bottom: 18px;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: 3px;
+  transform: translateX(-50%);
+}
+
+/* ── SPEEDOMETER COUNTER RING ── */
+.stat-num {
+  position: relative;
+}
+
+/* ── MOBILE ── */
+@media (max-width: 768px) {
+  body::before { display: none; }
+  .karma-top { right: 14px; bottom: 14px; width: 44px; height: 44px; }
+  .karma-tilt { transform: none !important; }
+  .karma-intro img { width: min(300px, 74vw); }
+  .hero::after { display: none; }
+  .karma-impact { left: 14px; bottom: 68px; }
+  .karma-impact-toggle { min-height: 44px; padding: 0 14px; }
+  .karma-impact-toggle strong { display: none; }
+  .karma-impact-toggle span { width: 24px; height: 24px; }
+  .karma-lightbox-nav { width: 40px !important; height: 40px !important; }
+  .karma-lightbox-prev { left: 8px; }
+  .karma-lightbox-next { right: 8px; }
+}
+
+/* ── REDUCED MOTION ── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+
+  .reveal-ready .karma-reveal {
+    opacity: 1;
+    transform: none;
+  }
+
+  .karma-intro { display: none; }
+  .karma-word { opacity: 1; transform: none; }
+  .karma-spark-canvas,
+  .karma-cursor-dot,
+  .karma-cursor-ring { display: none; }
+  body::before, body::after { display: none; }
+}
+
+/* ── CHECKERED FLAG DECORATION ── */
+.karma-flag-bar {
+  display: block;
+  height: 6px;
+  background: repeating-conic-gradient(#000 0% 25%, #fff 0% 50%) 0 0 / 12px 12px;
+  opacity: 0;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .8s cubic-bezier(.2, .8, .2, 1), opacity .4s ease;
+}
+
+.karma-visible .karma-flag-bar,
+.karma-flag-bar.karma-title-live {
+  opacity: 1;
+  transform: scaleX(1);
+}
+
+/* ── G-FORCE ON SECTION ENTRIES ── */
+@keyframes f1-slide-in {
+  from {
+    opacity: 0;
+    transform: translateX(-40px) skewX(-3deg);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0) skewX(0);
+  }
+}
+
+/* ── TACHOMETER PULSE ON HOVER ── */
+@keyframes tacho-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(224, 120, 32, 0); }
+  50% { box-shadow: 0 0 0 8px rgba(224, 120, 32, 0.15); }
+}
+
+.btn-o:hover,
+.btn-b:hover {
+  animation: tacho-pulse .8s ease infinite;
+}
