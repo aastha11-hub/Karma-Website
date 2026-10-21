@@ -152,7 +152,7 @@
         : '';
       return `<a class="n-card" href="${escapeHtml(safeUrl(item.link))}" target="_blank" rel="noopener">
         <div class="n-img"><img src="${escapeHtml(safeUrl(item.img))}" alt="${escapeHtml(item.title)}" loading="lazy"><span class="n-date">${escapeHtml(label)}</span></div>
-        <div class="n-body"><h4>${escapeHtml(item.title)}</h4><span class="n-more">Read More →</span></div>
+        <div class="n-body"><h4>${escapeHtml(item.title)}</h4></div>
       </a>`;
     }).join('');
   }
