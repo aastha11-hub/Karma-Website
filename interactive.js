@@ -272,26 +272,6 @@
     obs.observe(title);
   });
 
-  /* ── IMPACT FAB (PIT STOP) ── */
-  const impact = document.createElement('div');
-  impact.className = 'karma-impact';
-  impact.innerHTML = `
-    <button type="button" class="karma-impact-toggle" aria-label="Open impact actions" aria-expanded="false">
-      <span>+</span><strong>Make an Impact</strong>
-    </button>
-    <div class="karma-impact-menu">
-      <a href="https://pages.razorpay.com/karma-foundation" target="_blank">🤝 Donate Now</a>
-      <a href="https://karmafoundation.co/become-a-volunteer/" target="_blank">🙌 Become a Volunteer</a>
-      <a href="tel:+919898400312">📞 Call the Foundation</a>
-    </div>`;
-  document.body.appendChild(impact);
-
-  const impactToggle = impact.querySelector('.karma-impact-toggle');
-  impactToggle.addEventListener('click', () => {
-    const open = impact.classList.toggle('open');
-    impactToggle.setAttribute('aria-expanded', String(open));
-    impactToggle.setAttribute('aria-label', open ? 'Close impact actions' : 'Open impact actions');
-  });
 
   /* ── RIPPLE EFFECT ── */
   document.querySelectorAll('.btn-o, .btn-b, .btn-outline, .btn-wh, .btn-wh-s, .nav-donate, .mob-donate, .f-submit').forEach(btn => {

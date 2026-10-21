@@ -43,9 +43,7 @@
     const photos = (item.gallery || []).map((photo, index) =>
       `<img src="${escapeHtml(safeUrl(photo))}" alt="${escapeHtml(item.name)} photo ${index + 1}" loading="lazy">`
     ).join('');
-    const external = safeUrl(item.link) !== '#'
-      ? `<a class="karma-modal-link" href="${escapeHtml(safeUrl(item.link))}" target="_blank" rel="noopener">Learn more on the original site →</a>`
-      : '';
+    const external = '';
     modal.querySelector('.karma-modal-content').innerHTML = `
       <img class="karma-modal-hero" src="${escapeHtml(safeUrl(item.img))}" alt="${escapeHtml(item.name)}">
       <h2>${escapeHtml(item.name)}</h2>
